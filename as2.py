@@ -24,7 +24,7 @@ def connect():
 
         print("Connecting ...")
     except KeyboardInterrupt:
-        sys.exit("\nExiting PyGreEditor")
+        sys.exit("\nExiting PPDBE")
 
     # Check if input is valid, otherwise reenter credentials
     try:
@@ -107,7 +107,7 @@ def demo(cursor, connection):
 # Main Function
 def main():
     option = "3"
-    print("Hello, welcome to PyGreEditor!")
+    print("Hello, welcome to PPDBE!")
     connMan = connect()
 
     # Establish cursor to act on database
