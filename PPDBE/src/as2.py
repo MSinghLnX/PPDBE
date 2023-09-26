@@ -98,11 +98,17 @@ def demo(cursor, connection):
     cursor.execute("INSERT INTO grades(hofstra_ID, course, grade) VALUES('h1','CSC123','84')")
     cursor.execute("INSERT INTO grades(hofstra_ID, course, grade) VALUES('h1','CSC024','87')")
     cursor.execute("INSERT INTO grades(hofstra_ID, course, grade) VALUES('h1','CSC190','76')")
-    cursor.execute("SELECT grades.hofstra_ID, ROUND(AVG(grade)), students.name FROM grades JOIN students ON students.hofstra_ID = grades.hofstra_ID GROUP BY grades.hofstra_ID, students.name")
+    cursor.execute("SELECT grades.hofstra_ID, ROUND(AVG(grade)), students.name FROM grades LEFT OUTER JOIN students ON students.hofstra_ID = grades.hofstra_ID GROUP BY grades.hofstra_ID, students.name")
     print("Grades Table")
     print(cursor.fetchall())
     writeDB(connection)
     #connection.commit()
+
+# Fuction to view a table
+def viewTable(cursor, tableName):
+    cursor.execute("SELECT " + tableName + " FROM information_schema.tables WHERE table_schema = 'public'")
+    for table in cursor.fetchall():
+        print(table)
 
 # Main Function
 def main():
@@ -120,10 +126,11 @@ def main():
             if option == "1":
                 createTable(dbCur, connMan)
             elif option == "2":
+                tableName = input("Input name of table you'd like to view: ")
                 try:
-                    print(dbCur.fetchall())
+                    viewTable(dbCur, tableName)
                 except: 
-                    print("The database is empty!")
+                    print("The database is empty (Or the table doesn't exist)!")
             elif option == "3":
                 print("Welcome to the deep end! Ctrl + C to exit")
                 manualSQL(dbCur, connMan)
