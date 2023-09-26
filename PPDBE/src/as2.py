@@ -98,11 +98,17 @@ def demo(cursor, connection):
     cursor.execute("INSERT INTO grades(hofstra_ID, course, grade) VALUES('h1','CSC123','84')")
     cursor.execute("INSERT INTO grades(hofstra_ID, course, grade) VALUES('h1','CSC024','87')")
     cursor.execute("INSERT INTO grades(hofstra_ID, course, grade) VALUES('h1','CSC190','76')")
-    cursor.execute("SELECT grades.hofstra_ID, ROUND(AVG(grade)), students.name FROM grades LEFT OUTER JOIN students ON students.hofstra_ID = grades.hofstra_ID GROUP BY grades.hofstra_ID, students.name")
-    print("Grades Table")
-    print(cursor.fetchall())
+    cursor.execute("SELECT students.name, grades.hofstra_ID, ROUND(AVG(grade)) FROM grades LEFT OUTER JOIN students ON students.hofstra_ID = grades.hofstra_ID GROUP BY grades.hofstra_ID, students.name")
+    candiedFormat(cursor, connection, "Grades Table")
     writeDB(connection)
-    #connection.commit()
+
+# Example table format (Function can be adjusted depending on your needs) PS: Thanks Milan
+def candiedFormat(cursor, connection, tableName):
+    data = cursor.fetchall()
+    print(tableName)
+    for i in data:
+        print("Name: " + str(i[0]) + " |  ID: " + str(i[1]) + " |  Grade: " + str(i[2]))
+    return 0
 
 # Fuction to view a table
 def viewTable(cursor, tableName):
