@@ -105,9 +105,9 @@ def demo(cursor, connection):
 # Example table format (Function can be adjusted depending on your needs) PS: Thanks Milan
 def candiedFormat(cursor, connection, tableName):
     data = cursor.fetchall()
-    print(tableName)
+    print("\n" + tableName + "\n")
     for i in data:
-        print("Name: " + str(i[0]) + " |  ID: " + str(i[1]) + " |  Grade: " + str(i[2]))
+        print("Name: " + str(i[0]) + " |  ID: " + str(i[1]) + " |  Grade: " + str(i[2]) + "\n")
     return 0
 
 # Fuction to view a table
@@ -115,6 +115,7 @@ def viewTable(cursor, tableName):
     cursor.execute("SELECT " + tableName + " FROM information_schema.tables WHERE table_schema = 'public'")
     for table in cursor.fetchall():
         print(table)
+    return 0
 
 # Main Function
 def main():
